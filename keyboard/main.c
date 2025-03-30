@@ -50,6 +50,7 @@
 * Honestly i cba documenting more for now, i will continue as i continue on this project.
 * My right wrist hurts. :,(
 *
+*
 */
 
 const char *keycodes[] = {
@@ -68,7 +69,7 @@ int main() {
 
     int fd = open(device, O_RDONLY);
     if (fd == -1) {
-        perror("Cannot open device");
+        perror("Cannot open device, or you forgot to run the program as sudo.");
         return 1;
     }
 
