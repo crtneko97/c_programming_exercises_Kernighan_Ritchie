@@ -33,25 +33,13 @@
  * 
  * If you have alot of devices connected you can filter it out by 
  * cat /proc/bus/input/devices | grep -i <name>.
+ * -2025-03-30.
  *
 */
 
 
 
 
-
-/*
-* Allocate keycodes in global memory, 
-* which remains allocated for the entire time runtime of the program.
-*
-* Point to a constant string literal stored in read-only memory (static memory), 
-* pointed to by a pointer stored on the stack.
-*
-* Honestly i cba documenting more for now, i will continue as i continue on this project.
-* My right wrist hurts. :,(
-*
-*
-*/
 
 const char *keycodes[] = {
     "", "<ESC>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
@@ -88,21 +76,25 @@ int main() {
             struct timeval current_time;
             gettimeofday(&current_time, NULL);
 
-            // Calculate response time in microseconds clearly
-            long response_sec = current_time.tv_sec - ev.time.tv_sec;
-            long response_usec = current_time.tv_usec - ev.time.tv_usec;
-            double response_time = response_sec * 1000.0 + response_usec / 1000.0; // milliseconds clearly
 
-            if (ev.code < sizeof(keycodes)/sizeof(keycodes[0])) {
-                printf("Key pressed: %s (%d) | Response time: %.3f ms\n",
-                       keycodes[ev.code],
-                       ev.code,
-                       response_time);
-            } else {
-                printf("Unknown key pressed: %d | Response time: %.3f ms\n",
-                       ev.code,
-                       response_time);
-            }
+            // Calculate response time in microseconds clearly
+    long response_sec = current_time.tv_sec - ev.time.tv_sec;
+    long response_usec = current_time.tv_usec - ev.time.tv_usec;
+    double response_time = response_sec * 1000.0 + response_usec / 1000.0; // milliseconds clearly
+
+        if (ev.code < sizeof(keycodes)/sizeof(keycodes[0])) 
+            {
+            printf("Key pressed: %s (%d) | Response time: %.3f ms\n",
+                keycodes[ev.code],
+                    ev.code,
+                    response_time);
+            } 
+        else 
+        {
+            printf("Unknown key pressed: %d | Response time: %.3f ms\n",
+                ev.code,
+                response_time);
+        }
         }
     }
 
